@@ -1,7 +1,7 @@
 const Prescription = require("../../models/prescription");
 
 exports.getPrescriptions = async (req, res, next) => {
-  const doctorId = req.body.doctorId;
+  const patientId = req.user.userId;
 
   try {
     const prescriptions = await Prescription.find({ doctor: doctorId });

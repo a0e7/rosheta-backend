@@ -2,7 +2,7 @@ const Prescription = require("../../models/prescription");
 const User = require("../../models/user");
 
 exports.postPresciption = async (req, res, next) => {
-  const doctorId = req.body.doctorId;
+  const doctorId = req.user.userId;
   const patientNumber = req.body.patientNumber;
   const prescriptionDetails = req.body.prescriptionDetails;
 

@@ -4,9 +4,9 @@ const Role = require("../../models/roles");
 const bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res, next) => {
-  const patienRole = await Role.findOne({ name: "doctor" });
+  const patienRole = await Role.findOne({ name: "patient" });
   if (!patienRole) {
-    const newRole = new Role({ name: "doctor" });
+    const newRole = new Role({ name: "patient" });
     await newRole.save();
     patienRole = newRole;
   }

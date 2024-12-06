@@ -2,7 +2,7 @@ const Pharmacy = require("../../models/pharmacist");
 const User = require("../../models/user");
 
 exports.getPharmacy = async (req, res, next) => {
-  const pharmacyId = "674a1d03ff5abc35a47ba998";
+  const pharmacyId = req.user.userId;
   try {
     const user = await User.findById(pharmacyId);
     if (!user) {

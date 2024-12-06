@@ -15,7 +15,7 @@ exports.countPrescription = async (req, res, next) => {
         $facet: {
           dispensedPrescriptions: [
             { $match: { isDispensed: true } },
-            { $count: "dispensed" }, // ??
+            { $count: "dispensed" },
           ],
         },
       },

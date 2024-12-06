@@ -1,8 +1,5 @@
-const { strict } = require("assert");
-const { timeStamp } = require("console");
 const mongoose = require("mongoose");
-const { type } = require("os");
-// const Role = require("./role");
+
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema(

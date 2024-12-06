@@ -1,7 +1,7 @@
 const Doctor = require("../../models/doctor");
 
 exports.getDoctor = async (req, res, next) => {
-  const doctorId = req.user.userID;
+  const doctorId = req.user.userId;
   try {
     const doctor = await Doctor.findOne({ user_ID: doctorId });
     if (!doctor) {
