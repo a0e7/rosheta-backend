@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const permissionSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true }, // e.g. 'create prescription', 'delete user'
+    name: { type: String, required: true, unique: true },
   },
   { timestamps: true }
 );

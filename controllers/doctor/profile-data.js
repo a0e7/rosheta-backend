@@ -1,11 +1,7 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Doctor = require("../../models/doctor");
-const User = require("../../models/user");
 
 exports.getDoctor = async (req, res, next) => {
-  const doctorId = "674a177a663b5df517a75f0d";
+  const doctorId = req.user.userID;
   try {
     const doctor = await Doctor.findOne({ user_ID: doctorId });
     if (!doctor) {

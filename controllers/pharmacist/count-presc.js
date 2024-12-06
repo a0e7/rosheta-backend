@@ -5,24 +5,22 @@ const Prescription = require("../../models/prescription");
 
 exports.countPrescription = async (req, res, next) => {
   try {
-    const pharamacyId = req.user.userId; // Assuming 'userId' is added to req.user in the middleware
+    const pharamacyId = req.user.userId;
 
-    // Use aggregation to get the counts
     const [result] = await Prescription.aggregate([
       {
-        $match: { pharamacy: pharamacyId }, // Filter prescriptions by doctorId
+        $match: { pharamacy: pharamacyId },
       },
       {
         $facet: {
           dispensedPrescriptions: [
-            { $match: { isDispensed: true } }, // Filter dispensed prescriptions
-            { $count: "dispensed" }, // Count dispensed prescriptions
+            { $match: { isDispensed: true } },
+            { $count: "dispensed" }, // ??
           ],
         },
       },
     ]);
 
-    // If no result, set counts to 0
     const dispensePrescriptions =
       result?.dispensedPrescriptions[0]?.dispensed || 0;
 

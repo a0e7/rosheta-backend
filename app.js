@@ -25,22 +25,20 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    // Use the original filename directly
     const originalName = file.originalname;
-    const ext = path.extname(originalName); // Get the file extension
-    const nameWithoutExt = path.basename(originalName, ext); // Get the base name without extension
+    const ext = path.extname(originalName);
+    const nameWithoutExt = path.basename(originalName, ext);
 
-    // Optional: Handle collisions by adding a timestamp or a unique identifier
-    const newName = `${nameWithoutExt}-${Date.now()}${ext}`; // Add timestamp to ensure uniqueness
-    cb(null, newName); // Save the file with the original name + timestamp
+    const newName = `${nameWithoutExt}-${Date.now()}${ext}`;
+    cb(null, newName);
   },
 });
 
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" || // Corrected
-    file.mimetype === "image/jpeg" // Corrected
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
   ) {
     cb(null, true);
   } else {
@@ -48,14 +46,13 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-app.use(bodyParser.json()); // this is for paring application/json
+app.use(bodyParser.json());
 app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// Use CORS middleware
 app.use(
   cors({
-    origin: "*", // Adjust this to your needs (e.g., 'http://localhost:3000')
+    origin: "*",
     methods: ["OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

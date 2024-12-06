@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require("uuid");
 const Schema = mongoose.Schema;
 
 const Prescription = new Schema({
-  medicineId: { type: String, default: uuidv4 }, // no need for this
   medicineName: { type: String, required: true },
   quantity: { type: Number, required: true },
   usage: { type: String },

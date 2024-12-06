@@ -3,10 +3,6 @@ const { v4: uuidv4 } = require("uuid");
 const Schema = mongoose.Schema;
 
 const Education = new Schema({
-  educationId: {
-    type: String,
-    default: uuidv4,
-  },
   university: {
     type: String,
     required: true,

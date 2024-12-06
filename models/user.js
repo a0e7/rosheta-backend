@@ -1,7 +1,6 @@
 const { strict } = require("assert");
 const { timeStamp } = require("console");
 const mongoose = require("mongoose");
-// const Role = require("./role");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -22,7 +21,7 @@ const userSchema = new Schema(
     },
     isActive: {
       type: Boolean,
-      default: true, // By default, the account is active
+      default: true,
     },
   },
   { timestamps: true }

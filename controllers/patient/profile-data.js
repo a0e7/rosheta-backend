@@ -1,20 +1,17 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Patient = require("../../models/patient");
 const User = require("../../models/user");
 
 exports.getPatient = async (req, res, next) => {
-  const patientId = req.params.patientId;
+  const patientId = req.user.userId;
   try {
     const user = await User.findById(patientId);
     if (!user) {
-      const error = new Error("Could not find Doctor");
+      const error = new Error("Could not find Patient");
       error.statusCode = 404;
       throw error;
     }
     const patient = await Patient.findOne({ user_ID: patientId });
-    res.status(200).json({ message: "Doctor fetched", patient: patient });
+    res.status(200).json({ message: "Patient fetched", patient: patient });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

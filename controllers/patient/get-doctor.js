@@ -1,6 +1,3 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Doctor = require("../../models/doctor");
 const User = require("../../models/user");
 
@@ -19,7 +16,7 @@ exports.getDoctors = async (req, res, next) => {
 exports.getDoctor = async (req, res, next) => {
   const doctorId = req.params.doctorId;
   try {
-    const user = await User.findById(doctorId).select("-password");
+    const user = await User.findById(doctorId).select("phoneNumber");
     if (!user) {
       const error = new Error("Could not find Doctor");
       error.statusCode = 404;

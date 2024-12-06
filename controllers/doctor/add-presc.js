@@ -1,9 +1,5 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Prescription = require("../../models/prescription");
 const User = require("../../models/user");
-const patient = require("../../models/patient");
 
 exports.postPresciption = async (req, res, next) => {
   const doctorId = req.body.doctorId;
@@ -25,7 +21,7 @@ exports.postPresciption = async (req, res, next) => {
 
     const prescription = new Prescription({
       doctor: doctorId,
-      patient: user ? user._id : null, // Set patient ID if user exists
+      patient: user ? user._id : null,
       phoneNumber: patientNumber,
       prescriptionDetails: formattedDetails,
     });

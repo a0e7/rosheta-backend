@@ -1,8 +1,4 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Medicine = require("../../models/Medicine");
-const User = require("../../models/user");
 
 exports.updateMedicine = async (req, res, next) => {
   const medicineId = req.body.medicineId;

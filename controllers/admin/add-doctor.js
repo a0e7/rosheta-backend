@@ -1,7 +1,7 @@
 const Doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const Role = require("../../models/roles");
-const bcrypt = require("bcryptjs"); // Make sure bcrypt is required
+const bcrypt = require("bcryptjs");
 
 exports.postDoctor = async (req, res, next) => {
   if (!req.file) {
@@ -49,7 +49,6 @@ exports.postDoctor = async (req, res, next) => {
   }
 
   try {
-    // Check if phoneNumber already exists
     const existingUser = await User.findOne({ phoneNumber });
     if (existingUser) {
       return res.status(409).json({ message: "Phone number already exists" });

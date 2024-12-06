@@ -1,7 +1,3 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
-const Pharmacy = require("../../models/pharmacist");
 const User = require("../../models/user");
 
 exports.deactivatePharmacy = async (req, res, next) => {
@@ -15,7 +11,6 @@ exports.deactivatePharmacy = async (req, res, next) => {
       throw error;
     }
 
-    // Deactivate the doctor account by setting isActive to false
     pharmacy.isActive = false;
     await pharmacy.save();
 

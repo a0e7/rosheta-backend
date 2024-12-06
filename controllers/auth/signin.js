@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const User = require("../../models/user");
 
 const bcrypt = require("bcryptjs");
@@ -27,8 +29,7 @@ exports.login = async (req, res, next) => {
         userId: user._id.toString(),
         role: user.role,
       },
-      "thisisthemostsecretpasswordever",
-      // process.env.JWT_SECRET, // Use a secure environment variable for the secret key
+      process.env.JWT_SECRET,
 
       { expiresIn: "1h" }
     );

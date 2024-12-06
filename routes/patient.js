@@ -12,8 +12,8 @@ const router = express.Router();
 router.put("/signup", patientSignup.signup);
 router.get("/get-Doctors", getDoctor.getDoctors);
 router.get("/get-Doctor/:doctorId", getDoctor.getDoctor);
-router.get("get-Prescription", getPresc.getPrescriptions);
-router.get("get-Prescription/:prescriptionId", getPresc.getPrescription);
+router.get("/get-Prescription", getPresc.getPrescriptions);
+router.get("/get-Prescription/:prescriptionId", getPresc.getPrescription);
 router.get("/get-Profile/:doctorId", getProfile.getPatient);
 
 module.exports = router;

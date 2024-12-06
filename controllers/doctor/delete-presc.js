@@ -1,8 +1,4 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Prescription = require("../../models/prescription");
-const User = require("../../models/user");
 
 exports.deletePrescription = async (req, res, next) => {
   const prescriptionId = req.params.prescriptionId;

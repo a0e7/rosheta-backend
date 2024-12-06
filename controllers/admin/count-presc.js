@@ -1,24 +1,19 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Prescription = require("../../models/prescription");
 
 exports.countPrescription = async (req, res, next) => {
   try {
-    // Use aggregation to get the counts
     const [result] = await Prescription.aggregate([
       {
         $facet: {
-          totalPrescriptions: [{ $count: "total" }], // Count all prescriptions
+          totalPrescriptions: [{ $count: "total" }],
           dispensedPrescriptions: [
-            { $match: { isDispensed: true } }, // Filter dispensed prescriptions
-            { $count: "dispensed" }, // Count dispensed prescriptions
+            { $match: { isDispensed: true } },
+            { $count: "dispensed" },
           ],
         },
       },
     ]);
 
-    // If no result, set counts to 0
     const totalPrescriptions = result?.totalPrescriptions[0]?.total || 0;
     const dispensePrescriptions =
       result?.dispensedPrescriptions[0]?.dispensed || 0;
