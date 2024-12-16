@@ -21,15 +21,14 @@ exports.adminCreate = async (req, res, next) => {
     const user = User.findOne({ phoneNumber: phoneNumber });
     if (user) {
       res.status(409).json({ message: "there is a user with this number" });
-    } else {
-      const hashedpw = await bcrypt.hash(password, 12);
-      const newuser = new User({
-        phoneNumber: phoneNumber,
-        password: hashedpw,
-        role: adminRole,
-      });
-      newuser.save();
     }
+    const hashedpw = await bcrypt.hash(password, 12);
+    const newuser = new User({
+      phoneNumber: phoneNumber,
+      password: hashedpw,
+      role: adminRole,
+    });
+    newuser.save();
   } catch (err) {
     if (!err.statusCode) {
       console.error("admin create error:", err);
