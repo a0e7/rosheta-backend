@@ -33,7 +33,7 @@ exports.signup = async (req, res, next) => {
     newuser.save();
 
     const patient = new Patient({
-      user_ID: user._id,
+      user_ID: newuser._id,
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,
