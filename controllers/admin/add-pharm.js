@@ -4,7 +4,7 @@ const Role = require("../../models/roles");
 const bcrypt = require("bcryptjs");
 
 exports.postPharmacy = async (req, res, next) => {
-  const pharamcyRole = await Role.findOne({ name: "pharmacy" });
+  let pharamcyRole = await Role.findOne({ name: "pharmacy" });
   if (!pharamcyRole) {
     let newRole = new Role({ name: "pharmacy" });
     await newRole.save();

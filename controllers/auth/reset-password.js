@@ -3,11 +3,11 @@ const User = require("../../models/user");
 const mongoose = require("mongoose");
 
 exports.resetPassword = async (req, res, next) => {
-  const userId = new mongoose.Types.ObjectId(req.user.userId);
   const newPassword = req.body.newPassword;
   const oldPassword = req.body.oldPassword;
   try {
-    const user = User.findById(userId);
+    const userId = new mongoose.Types.ObjectId(req.user.userId);
+    const user = await User.findById(userId);
 
     const isEqual = await bcrypt.compare(oldPassword, user.password);
 

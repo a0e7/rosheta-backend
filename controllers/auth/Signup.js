@@ -20,13 +20,17 @@ exports.signup = async (req, res, next) => {
   const dateOfBirth = req.body.dateOfBirth;
   const residenceCity = req.body.residenceCity;
   try {
+    const user = User.findOne({ phoneNumber: phoneNumber });
+    if (user) {
+      res.status(409).json({ message: "there is a user with this number" });
+    }
     const hashedpw = await bcrypt.hash(password, 12);
-    const user = new User({
+    const newuser = new User({
       phoneNumber: phoneNumber,
       password: hashedpw,
       role: role,
     });
-    user.save();
+    newuser.save();
 
     const patient = new Patient({
       user_ID: user._id,

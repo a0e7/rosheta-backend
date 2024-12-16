@@ -1,5 +1,5 @@
 const Verification = require("../../models/verfication");
-const user = require("../../models/user");
+const User = require("../../models/user");
 const twilio = require("twilio");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -21,22 +21,24 @@ exports.verfiy = async (req, res, next) => {
         success: false,
         message: "Verification code not found or expired.",
       });
-    } else if (!verificationCode) {
+    }
+    if (!verificationCode) {
       const generatedCode = Math.floor(
         100000 + Math.random() * 900000
       ).toString();
 
       const verification = new Verification({
         phoneNumber: phoneNumber,
-        verificationCode: verificationCode,
+        verificationCode: generatedCode,
         createdAt: new Date(),
       });
       await verification.save();
+      numberTosend = "+967" + phoneNumber;
 
       await client.messages.create({
         body: `Your verification code is ${generatedCode}`,
         from: process.env.TWILIO_NUMBER,
-        to: phoneNumber,
+        to: numberTosend,
       });
 
       return res.status(200).json({

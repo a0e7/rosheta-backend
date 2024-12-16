@@ -1,5 +1,6 @@
 const Medicine = require("../../models/Medicine");
 const fs = require("fs").promises;
+const path = require("path");
 
 exports.deleteMedicine = async (req, res, next) => {
   const medicineId = req.params.medicineId;
@@ -12,7 +13,7 @@ exports.deleteMedicine = async (req, res, next) => {
     }
 
     if (medicine.photo) {
-      const filePath = path.join(__dirname, "images", medicine.photo);
+      const filePath = path.join(__dirname, "../../", medicine.photo);
       await fs.unlink(filePath);
     }
 

@@ -10,8 +10,8 @@ const isAuth = require("../middleware/is-auth");
 const router = express.Router();
 
 router.post("/login", loginController.login);
-router.post("/resetPassword", isAuth(), resetPassword.resetPassword);
-router.post("/forgetPassword", forgetPassword.forgetPassword);
+router.put("/resetPassword", isAuth(), resetPassword.resetPassword);
+router.put("/forgetPassword", forgetPassword.forgetPassword);
 router.post("/verfiy", verfiy.verfiy);
 router.post("/admin-create", createAdmin.adminCreate);
 
