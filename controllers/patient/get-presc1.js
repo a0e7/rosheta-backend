@@ -5,7 +5,7 @@ exports.getPrescriptions = async (req, res, next) => {
   try {
     const patientId = new mongoose.Types.ObjectId(req.user.userId);
 
-    const prescriptions = await Prescription.findOne({ patient: patientId });
+    const prescriptions = await Prescription.find({ patient: patientId });
 
     if (!prescriptions || prescriptions.length === 0) {
       return res
