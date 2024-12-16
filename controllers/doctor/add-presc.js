@@ -13,6 +13,7 @@ const patient = require("../../models/patient");
 
 exports.postPresciption = async (req, res, next) => {
   const doctorId = new mongoose.Types.ObjectId(req.user.userId);
+
   const patientNumber = req.body.phoneNumber;
   const patientName = req.body.patientName;
   const prescriptionDetails = req.body.prescriptionDetails;
