@@ -19,8 +19,8 @@ exports.adminCreate = async (req, res, next) => {
   const password = req.body.password;
   try {
     const user = User.findOne({ phoneNumber: phoneNumber });
-    if (phoneNumber === user.phoneNumber) {
-      res.status(400).json({ message: "there is a user with this number" });
+    if (user) {
+      res.status(409).json({ message: "there is a user with this number" });
     } else {
       const hashedpw = await bcrypt.hash(password, 12);
       const newuser = new User({
