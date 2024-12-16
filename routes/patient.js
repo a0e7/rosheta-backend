@@ -2,7 +2,7 @@ const express = require("express");
 
 const patientSignup = require("../controllers/auth/Signup");
 const getDoctor = require("../controllers/patient/get-doctor");
-const getPresc = require("../controllers/patient/get-presc");
+const getPresc = require("../controllers/patient/get-presc1");
 const getProfile = require("../controllers/patient/profile-data");
 
 const isAuth = require("../middleware/is-auth");
