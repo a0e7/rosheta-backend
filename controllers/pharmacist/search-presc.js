@@ -1,12 +1,6 @@
 const Prescription = require("../../models/prescription");
 
 exports.searchPresciption = async (req, res, next) => {
-  // try {
-  // const { query } = req.query;
-
-  // const prescriptions = await Prescription.find({
-  //   prescriptionId: { $regex: `^${query}`, $options: "i" },
-  // }).limit(10);
   const prescriptionId = req.params.prescriptionId;
   try {
     const prescription = await Prescription.findOne({

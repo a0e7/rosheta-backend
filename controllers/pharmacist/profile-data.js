@@ -3,8 +3,9 @@ const User = require("../../models/user");
 const mongoose = require("mongoose");
 
 exports.getPharmacy = async (req, res, next) => {
-  const pharamacyId = new mongoose.Types.ObjectId(req.user.userId);
   try {
+    const pharamacyId = new mongoose.Types.ObjectId(req.user.userId);
+
     const user = await User.findById(pharamacyId);
     if (!user) {
       const error = new Error("Could not find Pharamcy");

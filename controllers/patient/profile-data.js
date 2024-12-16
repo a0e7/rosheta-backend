@@ -1,9 +1,11 @@
 const Patient = require("../../models/patient");
 const User = require("../../models/user");
+const mongoose = require("mongoose");
 
 exports.getPatient = async (req, res, next) => {
-  const patientId = req.user.userId;
   try {
+    const patientId = new mongoose.Types.ObjectId(req.user.userId);
+
     const user = await User.findById(patientId);
     if (!user) {
       const error = new Error("Could not find Patient");

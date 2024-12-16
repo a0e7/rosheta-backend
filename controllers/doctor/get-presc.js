@@ -4,9 +4,9 @@ const Doctor = require("../../models/doctor");
 const Pharmacist = require("../../models/pharmacist");
 
 exports.getPrescriptions = async (req, res, next) => {
-  const doctorId = new mongoose.Types.ObjectId(req.user.userId);
-
   try {
+    const doctorId = new mongoose.Types.ObjectId(req.user.userId);
+
     const prescriptions = await Prescription.find({ doctor: doctorId });
 
     if (!prescriptions || prescriptions.length === 0) {

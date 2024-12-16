@@ -4,7 +4,7 @@ const Doctor = require("../../models/doctor");
 const Medicine = require("../../models/Medicine");
 const Patient = require("../../models/patient");
 const Counter = require("../../models/counter");
-const twilio = require("twilio"); // Or, for ESM: import twilio from "twilio";
+const twilio = require("twilio");
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
@@ -25,6 +25,8 @@ exports.postPresciption = async (req, res, next) => {
   }
 
   try {
+    const doctorId = new mongoose.Types.ObjectId(req.user.userId);
+
     const formattedDetails = Array.isArray(prescriptionDetails)
       ? prescriptionDetails
       : [prescriptionDetails];
