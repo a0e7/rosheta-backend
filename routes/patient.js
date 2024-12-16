@@ -12,7 +12,7 @@ const router = express.Router();
 router.put("/signup", patientSignup.signup);
 router.get("/get-Doctors", getDoctor.getDoctors);
 router.get("/get-Doctor/:doctorId", getDoctor.getDoctor);
-router.get("/get-Prescriptions", getPresc.getPrescriptions);
+router.get("/get-Prescriptions", isAuth(), getPresc.getPrescriptions);
 router.get("/get-Prescription/:prescriptionId", getPresc.getPrescription);
 router.get("/get-Profile/:doctorId", getProfile.getPatient);
 
