@@ -44,6 +44,11 @@ const doctorSchema = new Schema(
       type: String,
       required: true,
     },
+    PhoneNumber: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     dateOfBirth: {
       type: Date,
       required: true,
@@ -68,6 +73,10 @@ const doctorSchema = new Schema(
     photo: {
       type: String,
       required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

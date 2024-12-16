@@ -15,12 +15,12 @@ exports.postPharmacy = async (req, res, next) => {
   const role = pharamcyRole;
   const pharmacyName = req.body.pharmacyName;
   const pharmacyLocation = req.body.pharmacyLocation;
-  const pharmacyPhoneNumber = req.body.pharmacyPhoneNumber;
+  const phoneNumber = req.body.phoneNumber;
   const pharmacyEmployee = req.body.pharmacyEmployee;
   const pharmacyEmployeeNumber = req.body.pharmacyEmployeeNumber;
 
   if (
-    !pharmacyPhoneNumber ||
+    !phoneNumber ||
     !password ||
     !pharmacyName ||
     !pharmacyLocation ||
@@ -34,7 +34,7 @@ exports.postPharmacy = async (req, res, next) => {
 
   try {
     const existingUser = await User.findOne({
-      phoneNumber: pharmacyPhoneNumber,
+      phoneNumber: phoneNumber,
     });
     if (existingUser) {
       const error = new Error("Phone number already in use");
@@ -44,7 +44,7 @@ exports.postPharmacy = async (req, res, next) => {
 
     const hashedpw = await bcrypt.hash(password, 12);
     const user = await new User({
-      phoneNumber: pharmacyPhoneNumber,
+      phoneNumber: phoneNumber,
       password: hashedpw,
       role: role,
     }).save();
@@ -53,6 +53,7 @@ exports.postPharmacy = async (req, res, next) => {
       user_ID: user._id,
       pharmacyName: pharmacyName,
       pharmacyLocation: pharmacyLocation,
+      phoneNumber: phoneNumber,
       pharmacyEmployee: pharmacyEmployee,
       pharmacyEmployeeNumber: pharmacyEmployeeNumber,
     }).save();

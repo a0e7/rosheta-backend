@@ -13,20 +13,29 @@ const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 
-router.post("/add-Prescription", addPrescription.postPresciption);
-router.patch("/count-Prescription", countPrescriptions.countPrescription);
+router.post("/add-Prescription", isAuth(), addPrescription.postPresciption);
+router.patch(
+  "/count-Prescription",
+  isAuth(),
+  countPrescriptions.countPrescription
+);
 router.delete(
   "/delete-Prescription/:prescriptionId",
+  isAuth(),
   deletePrescription.deletePrescription
 );
-router.put("/edit-Prescription", updatePrescription.updatePresciption);
-router.get("/get-Prescriptions", getPrescription.getPrescriptions);
+router.put(
+  "/edit-Prescription/:prescriptionId",
+  isAuth(),
+  updatePrescription.updatePresciption
+);
+router.get("/get-Prescriptions", isAuth(), getPrescription.getPrescriptions);
 router.get(
   "/get-Prescription/:prescriptionId",
   getPrescription.getPrescription
 );
 router.get("/medicine-Search", medcineSearch.searchMedicine);
-router.get("/profile-Data", profileData.getDoctor);
+router.get("/profile-Data", isAuth(), profileData.getDoctor);
 router.get("/search-Prescription", prescriptionSearch.searchPresciption);
 
 module.exports = router;

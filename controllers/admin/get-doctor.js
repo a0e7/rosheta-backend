@@ -16,21 +16,13 @@ exports.getDoctors = async (req, res, next) => {
 exports.getDoctor = async (req, res, next) => {
   const doctorId = req.params.doctorId;
   try {
-    const user = await User.findById(doctorId).select("-password");
-    if (!user) {
-      const error = new Error("Could not find Doctor");
-      error.statusCode = 404;
-      throw error;
-    }
-    const doctor = await Doctor.findOne({ user_ID: doctorId });
+    const doctor = await Doctor.findById(doctorId);
     if (!doctor) {
       const error = new Error("Could not find Doctor details");
       error.statusCode = 404;
       throw error;
     }
-    res
-      .status(200)
-      .json({ message: "Doctor fetched", user: user, doctor: doctor });
+    res.status(200).json({ message: "Doctor fetched", doctor: doctor });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

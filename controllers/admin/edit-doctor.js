@@ -1,10 +1,11 @@
 const path = require("path");
+const fs = require("fs");
 const Doctor = require("../../models/doctor");
 const User = require("../../models/user");
 
 exports.updateDoctor = async (req, res, next) => {
-  const doctorId = req.body.doctorId;
-  const phoneNumber = req.body.phoneNumber;
+  const doctorId = req.params.doctorId;
+  const phoneNumber = req.body.PhoneNumber;
   const firstName = req.body.firstName;
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
@@ -14,8 +15,7 @@ exports.updateDoctor = async (req, res, next) => {
   const briefHistory = req.body.briefHistory;
   const workPlace = req.body.workPlace;
   const education = req.body.education;
-  const imageUrl = req.body.photo;
-
+  const imageUrl = req.body.image;
   if (
     !phoneNumber ||
     !firstName ||
@@ -32,14 +32,16 @@ exports.updateDoctor = async (req, res, next) => {
     return next(error);
   }
 
-  if (!imageUrl) {
-    const error = new Error("No image picked");
-    error.statusCode = 422;
-    return next(error);
-  }
-
   try {
-    const user = await User.findById(doctorId);
+    const doctor = await Doctor.findById(doctorId);
+
+    if (!doctor) {
+      const error = new Error("Could not find the doctor details");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const user = await User.findOne({ _id: doctor.user_ID });
     if (!user) {
       const error = new Error("Could not find Doctor");
       error.statusCode = 404;
@@ -49,16 +51,7 @@ exports.updateDoctor = async (req, res, next) => {
     user.phoneNumber = phoneNumber;
     await user.save();
 
-    const doctor = await Doctor.findOne({ user_ID: user._id });
-
-    if (!doctor) {
-      const error = new Error("Could not find the doctor details");
-      error.statusCode = 404;
-      throw error;
-    }
-
-    if (imageUrl !== doctor.photo) {
-      clearImage(doctor.imageUrl);
+    if (imageUrl) {
       imageUrl = req.file.path.replace("\\", "/");
     }
 
@@ -69,13 +62,16 @@ exports.updateDoctor = async (req, res, next) => {
     doctor.firstName = firstName;
     doctor.middleName = middleName;
     doctor.lastName = lastName;
+    doctor.PhoneNumber = phoneNumber;
     doctor.dateOfBirth = dateOfBirth;
     doctor.residenceCity = residenceCity;
     doctor.proficiency = proficiency;
     doctor.briefHistory = briefHistory;
     doctor.workPlace = workPlace;
     doctor.education = formattedEducation;
-    doctor.photo = imageUrl;
+    if (imageUrl) {
+      doctor.photo = imageUrl;
+    }
 
     const result = await doctor.save();
     res.status(200).json({ message: "Doctor updated", doctor: result });

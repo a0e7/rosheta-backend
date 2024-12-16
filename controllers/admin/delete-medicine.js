@@ -1,4 +1,5 @@
 const Medicine = require("../../models/Medicine");
+const fs = require("fs").promises;
 
 exports.deleteMedicine = async (req, res, next) => {
   const medicineId = req.params.medicineId;
@@ -8,6 +9,11 @@ exports.deleteMedicine = async (req, res, next) => {
       const error = new Error("Could not find Medicine");
       error.statusCode = 404;
       throw error;
+    }
+
+    if (medicine.photo) {
+      const filePath = path.join(__dirname, "images", medicine.photo);
+      await fs.unlink(filePath);
     }
 
     await Medicine.findByIdAndDelete(medicineId);

@@ -4,7 +4,9 @@ exports.getPrescriptions = async (req, res, next) => {
   const patientId = req.user.userId;
 
   try {
-    const prescriptions = await Prescription.find({ doctor: doctorId });
+    const prescriptions = await Prescription.find({ doctor: doctorId })
+      .populate("doctor", "firstName middleName lastName photo")
+      .populate("pharmacy", "firstName middleName lastName");
 
     if (!prescriptions || prescriptions.length === 0) {
       return res

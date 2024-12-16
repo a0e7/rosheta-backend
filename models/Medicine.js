@@ -25,6 +25,10 @@ const medicineSchema = new Schema(
       required: [true, "Origin is required"],
       trim: true,
     },
+    photo: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

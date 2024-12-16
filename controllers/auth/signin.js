@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const User = require("../../models/user");
 
+const Role = require("../../models/roles");
+
 const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
@@ -23,11 +25,18 @@ exports.login = async (req, res, next) => {
     if (!isEqual) {
       return res.status(401).json({ message: "Incorrect password" });
     }
+
+    const role = await Role.findById(user.role);
+
+    if (!role) {
+      throw new Error("Role not found");
+    }
+
     const token = jwt.sign(
       {
         phoneNumber: user.phoneNumber,
         userId: user._id.toString(),
-        role: user.role,
+        role: role.name,
       },
       process.env.JWT_SECRET,
 
@@ -35,8 +44,6 @@ exports.login = async (req, res, next) => {
     );
     res.status(200).json({
       token: token,
-      userId: user._id.toString(),
-      role: user.role,
     });
   } catch (err) {
     if (!err.statusCode) {

@@ -1,8 +1,9 @@
 const Prescription = require("../../models/prescription");
+const mongoose = require("mongoose");
 
 exports.countPrescription = async (req, res, next) => {
   try {
-    const doctorId = req.user.userId;
+    const doctorId = new mongoose.Types.ObjectId(req.user.userId);
 
     const [result] = await Prescription.aggregate([
       {

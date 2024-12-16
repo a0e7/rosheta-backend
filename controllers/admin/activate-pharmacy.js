@@ -1,18 +1,24 @@
 const User = require("../../models/user");
+const Pharamcy = require("../../models/pharmacist");
 
 exports.activatePharmacy = async (req, res, next) => {
   const pharmacyId = req.params.pharmacyId;
 
   try {
-    const pharmacy = await User.findById(pharmacyId);
-    if (!pharmacy) {
+    const pharamacy = await Pharamcy.findById(pharmacyId);
+    if (!pharamacy) {
       const error = new Error("Could not find Pharmacy");
       error.statusCode = 404;
       throw error;
     }
+    const userId = pharamacy.user_ID;
+    const user = await User.findOne(userId);
 
-    pharmacy.isActive = true;
-    await pharmacy.save();
+    pharamacy.isActive = true;
+    await pharamacy.save();
+
+    user.isActive = true;
+    await user.save();
 
     res.status(200).json({ message: "Pharamcy account activated" });
   } catch (err) {

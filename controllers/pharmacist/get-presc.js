@@ -1,10 +1,11 @@
 const Prescription = require("../../models/prescription");
+const mongoose = require("mongoose");
 
 exports.getPrescriptions = async (req, res, next) => {
-  const pharmacyId = req.user.userId;
+  const pharamacyId = new mongoose.Types.ObjectId(req.user.userId);
 
   try {
-    const prescriptions = await Prescription.find({ pharmacy: pharmacyId });
+    const prescriptions = await Prescription.find({ pharmacy: pharamacyId });
 
     if (!prescriptions || prescriptions.length === 0) {
       return res
@@ -21,7 +22,7 @@ exports.getPrescriptions = async (req, res, next) => {
 };
 
 exports.getPrescription = async (req, res, next) => {
-  const prescriptionId = req.params.prescriptionId;
+  const prescriptionId = new mongoose.Types.ObjectId(req.params.prescriptionId);
   try {
     const prescription = await Prescription.findById(prescriptionId);
     if (!prescription) {

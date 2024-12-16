@@ -8,26 +8,40 @@ const Prescription = new Schema({
   quantity: { type: Number, required: true },
   usage: { type: String },
   note: { type: String },
+  photo: {
+    type: String,
+    default: null,
+  },
   isDispensed: { type: Boolean, default: false },
 });
 
 const prescriptionSchema = new Schema(
   {
-    prescriptionId: { type: String, default: uuidv4 },
+    prescriptionId: { type: String, required: true },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+    doctorName: {
+      type: String,
+    },
     pharmacy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
-    }, // add date
+    },
+    pharmacyName: {
+      type: String,
+      default: null,
+    },
     patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
+    },
+    patientName: {
+      type: String,
     },
     phoneNumber: {
       type: String,

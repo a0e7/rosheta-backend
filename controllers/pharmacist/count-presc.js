@@ -1,15 +1,13 @@
-const fs = require("fs");
-const { validationResult } = require("express-validator");
-const path = require("path");
 const Prescription = require("../../models/prescription");
+const mongoose = require("mongoose");
 
 exports.countPrescription = async (req, res, next) => {
   try {
-    const pharamacyId = req.user.userId;
+    const pharamacyId = new mongoose.Types.ObjectId(req.user.userId);
 
     const [result] = await Prescription.aggregate([
       {
-        $match: { pharamacy: pharamacyId },
+        $match: { pharmacy: pharamacyId },
       },
       {
         $facet: {

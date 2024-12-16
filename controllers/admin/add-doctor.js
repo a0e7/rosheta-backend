@@ -10,7 +10,7 @@ exports.postDoctor = async (req, res, next) => {
     return next(error);
   }
 
-  const doctorRole = await Role.findOne({ name: "doctor" });
+  let doctorRole = await Role.findOne({ name: "doctor" });
   if (!doctorRole) {
     const newRole = new Role({ name: "doctor" });
     await newRole.save();
@@ -19,7 +19,6 @@ exports.postDoctor = async (req, res, next) => {
 
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
-  const role = doctorRole;
   const firstName = req.body.firstName;
   const middleName = req.body.middleName;
   const lastName = req.body.lastName;
@@ -29,24 +28,25 @@ exports.postDoctor = async (req, res, next) => {
   const briefHistory = req.body.briefHistory;
   const workPlace = req.body.workPlace;
   const education = req.body.education;
-  const imageUrl = req.file.path.replace("\\", "/");
+  const photo = req.file.path.replace("\\", "/");
+  const role = doctorRole;
 
-  if (
-    !phoneNumber ||
-    !password ||
-    !firstName ||
-    !middleName ||
-    !lastName ||
-    !dateOfBirth ||
-    !residenceCity ||
-    !proficiency ||
-    !workPlace ||
-    !education
-  ) {
-    const error = new Error("All fields are required");
-    error.statusCode = 422;
-    return next(error);
-  }
+  // if (
+  //   !phoneNumber ||
+  //   !password ||
+  //   !firstName ||
+  //   !middleName ||
+  //   !lastName ||
+  //   !dateOfBirth ||
+  //   !residenceCity ||
+  //   !proficiency ||
+  //   !workPlace ||
+  //   !education
+  // ) {
+  //   const error = new Error("All fields are required");
+  //   error.statusCode = 422;
+  //   return next(error);
+  // }
 
   try {
     const existingUser = await User.findOne({ phoneNumber });
@@ -63,20 +63,23 @@ exports.postDoctor = async (req, res, next) => {
 
     const formattedEducation = Array.isArray(education)
       ? education
-      : [education];
+      : education
+      ? [education]
+      : [];
 
     const doctor = await new Doctor({
       user_ID: user._id,
       firstName: firstName,
       middleName: middleName,
       lastName: lastName,
+      PhoneNumber: phoneNumber,
       dateOfBirth: dateOfBirth,
       residenceCity: residenceCity,
       proficiency: proficiency,
       briefHistory: briefHistory,
       workPlace: workPlace,
       education: formattedEducation,
-      photo: imageUrl,
+      photo: photo,
     }).save();
 
     res.status(201).json({

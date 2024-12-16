@@ -2,8 +2,9 @@ const Prescription = require("../../models/prescription");
 const User = require("../../models/user");
 
 exports.updatePresciption = async (req, res, next) => {
-  const prescriptionId = req.body.prescriptionId;
-  const patientNumber = req.body.patientNumber;
+  const prescriptionId = req.params.prescriptionId;
+  const patientNumber = req.body.phoneNumber;
+  const patientName = req.body.patientName;
   const prescriptionDetails = req.body.prescriptionDetails;
 
   if (!patientNumber || !prescriptionDetails) {
@@ -22,7 +23,8 @@ exports.updatePresciption = async (req, res, next) => {
     }
 
     prescription.patient = user ? user._id : null;
-    prescription.patientNumber = patientNumber;
+    prescription.phoneNumber = patientNumber;
+    prescription.patientName = patientName;
     prescription.prescriptionDetails = Array.isArray(prescriptionDetails)
       ? prescriptionDetails
       : [prescriptionDetails];

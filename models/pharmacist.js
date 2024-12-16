@@ -18,6 +18,11 @@ const pharmacistSchema = new Schema(
       type: String,
       required: true,
     },
+    phoneNumber: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     pharmacyEmployee: {
       type: String,
       required: true,
@@ -25,6 +30,10 @@ const pharmacistSchema = new Schema(
     pharmacyEmployeeNumber: {
       type: String,
       required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

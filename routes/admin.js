@@ -21,7 +21,7 @@ const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 
-router.post("/add-Doctor", isAuth, addDoctor.postDoctor);
+router.post("/add-Doctor", addDoctor.postDoctor);
 router.post("/add-Medicine", addMedicine.postMedicine);
 router.post("/add-Pharm", addPharm.postPharmacy);
 router.patch("/count-Presc", countpresc.countPrescription);
@@ -37,9 +37,9 @@ router.patch(
   activatePharmacy.activatePharmacy
 );
 router.patch("/activate-Doctor/:doctorId", activateDoctor.activateDoctor);
-router.put("/edit-Doctor", editDoctor.updateDoctor);
-router.put("/edit-Medicine", editMedicine.updateMedicine);
-router.put("/edit-Pharmacy", editPharmacy.updatePharmacy);
+router.put("/edit-Doctor/:doctorId", editDoctor.updateDoctor);
+router.put("/edit-Medicine/:medicineId", editMedicine.updateMedicine);
+router.put("/edit-Pharmacy/:pharmacyId", editPharmacy.updatePharmacy);
 router.get("/get-Doctors", getDoctor.getDoctors);
 router.get("/get-Doctor/:doctorId", getDoctor.getDoctor);
 router.get("/get-Medicines", getMedicine.getMedicines);
