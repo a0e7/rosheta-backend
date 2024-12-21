@@ -33,7 +33,7 @@ exports.postPresciption = async (req, res, next) => {
 
     const user = await User.findOne({ phoneNumber: patientNumber });
     const doctor = await Doctor.findOne({ user_ID: doctorId });
-    const patient = await Patient.findOne({ user_ID: user._id });
+    // const patient = await Patient.findOne({ user_ID: user._id });
 
     for (let detail of formattedDetails) {
       const medicine = await Medicine.findOne({
